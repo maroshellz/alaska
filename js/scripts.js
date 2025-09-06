@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Countdown Timer
     function initCountdownTimer() {
         function updateCountdown() {
-            const weddingDate = new Date('December 18, 2025 16:00:00').getTime();
+            const weddingDate = new Date('December 20, 2025 16:00:00').getTime();
             const now = new Date().getTime();
             const timeLeft = weddingDate - now;
 
