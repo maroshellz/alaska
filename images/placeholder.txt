@@ -1,0 +1,33 @@
+Destiny Wedding Images - Current Setup
+
+This folder contains the following images for the wedding site:
+
+1. destiny5.jpg - Hero section background image
+   - Used as the main background for the hero section
+   - Should be high-quality and romantic
+   - Provides backdrop for white text overlay
+
+2. destiny2.jpg - Main couple photo for About section
+   - Featured in the about section
+   - Should showcase the couple beautifully
+   - Used as the primary couple image
+
+3. destiny1.jpg through destiny5.jpg - Gallery images
+   - destiny1.jpg - Gallery photo 1
+   - destiny2.jpg - Gallery photo 2 (also used in about section)
+   - destiny3.jpg - Gallery photo 3
+   - destiny4.jpg - Gallery photo 4
+   - destiny5.jpg - Gallery photo 5 (also used as hero background)
+
+Image Usage:
+- Hero Background: destiny5.jpg
+- About Section: destiny2.jpg
+- Gallery: destiny1.jpg, destiny2.jpg, destiny3.jpg, destiny4.jpg, destiny5.jpg
+
+Note: destiny6.jpg is available but not currently used in the site layout.
+
+To customize for different clients:
+1. Replace destiny1-5.jpg with client's photos
+2. Maintain the same filenames for easy replacement
+3. Ensure images are high-quality and properly sized
+4. Keep consistent style and color tones across all images
