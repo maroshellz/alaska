@@ -112,18 +112,23 @@ html {
 .hero-names {
     margin-bottom: 2rem;
     animation: fadeInUp 1.2s ease-out 0.5s both;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
 }
 
 .bride-name, .groom-name {
     font-family: 'Great Vibes', cursive;
-    font-size: 6rem;
+    font-size: 5rem;
     background: linear-gradient(135deg, #ffd700, #ffffff, #ffd700);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     display: inline-block;
     text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
-    margin: 0 1.5rem;
+    margin: 0 1rem;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     animation: float 3s ease-in-out infinite;
     cursor: pointer;
@@ -174,12 +179,12 @@ html {
 
 .ampersand {
     font-family: 'Great Vibes', cursive;
-    font-size: 5rem;
+    font-size: 4rem;
     background: linear-gradient(135deg, #ffd700, #ffffff, var(--navy-light));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin: 0 1rem;
+    margin: 0 0.5rem;
     text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
     animation: pulse 2s ease-in-out infinite;
     animation-delay: 0.6s;
@@ -348,6 +353,31 @@ html {
     color: #ffd700;
     text-shadow: 3px 3px 10px rgba(255, 215, 0, 0.8);
     animation: locationGlow 2s ease-in-out infinite;
+}
+
+/* Hero Hashtag */
+.hero-hashtag {
+    margin-top: 2rem;
+    animation: fadeInUp 1s ease-out 1.6s both;
+}
+
+.hashtag {
+    font-size: 1.2rem;
+    color: #ffd700;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+}
+
+.hashtag:hover {
+    transform: scale(1.1);
+    color: #ffffff;
+    text-shadow: 3px 3px 8px rgba(255, 215, 0, 0.8);
+    animation: pulse 1.5s ease-in-out infinite;
 }
 
 .hero-location:hover {
@@ -726,10 +756,6 @@ html {
     animation: fadeInUp 1s forwards;
 }
 
-.timeline-item:nth-child(even) {
-    flex-direction: row-reverse;
-}
-
 .timeline-date {
     flex: 0 0 200px;
     text-align: center;
@@ -743,6 +769,21 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.timeline-item {
+    display: flex;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards;
+    align-items: center;
+}
+
+.timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
 }
 
 .timeline-content {
@@ -1173,6 +1214,67 @@ html {
     z-index: 1;
 }
 
+/* RSVP Toast */
+.rsvp-toast {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 3rem;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    border: 2px solid rgba(255, 215, 0, 0.2);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+.rsvp-toast::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(59, 130, 246, 0.05));
+    z-index: 1;
+}
+
+.toast-quote {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 2rem;
+}
+
+.toast-quote i {
+    font-size: 2rem;
+    color: #ffd700;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.quote-text {
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--navy-blue);
+    font-weight: 500;
+    line-height: 1.6;
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+}
+
+.toast-message {
+    position: relative;
+    z-index: 2;
+}
+
+.toast-message p {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    line-height: 1.8;
+    margin: 0;
+    font-weight: 400;
+}
+
 /* RSVP Form */
 .rsvp-form {
     background: rgba(255, 255, 255, 0.9);
@@ -1354,6 +1456,13 @@ html {
 }
 
 /* Responsive Design */
+@media (min-width: 769px) {
+    .hero-names {
+        flex-wrap: nowrap;
+        white-space: nowrap;
+    }
+}
+
 @media (max-width: 768px) {
     .hero-content {
         padding: 3rem 2rem;
@@ -1362,7 +1471,7 @@ html {
     
     .bride-name, .groom-name {
         font-size: 4.5rem;
-        margin: 0 0.8rem;
+        margin: 0 0.5rem;
     }
     
     .ampersand {
@@ -1393,27 +1502,28 @@ html {
     
     .timeline::before {
         left: 30px;
+        width: 3px;
+        background: linear-gradient(to bottom, var(--navy-blue), #ffd700);
     }
     
     .timeline-item {
         flex-direction: column !important;
         padding-left: 60px;
+        margin-bottom: 2rem;
+        position: relative;
     }
     
     .timeline-date {
         position: absolute;
         left: -30px;
-        top: 0;
-        background: var(--white);
-        padding: 0.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        background: white;
         border-radius: 50%;
-        width: 60px;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-        box-shadow: var(--shadow);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        border: 2px solid var(--navy-blue);
     }
     
     .timeline-content::before {
@@ -1455,11 +1565,24 @@ html {
     }
     
     .timeline-content {
-        padding: 2rem;
+        padding: 1.5rem;
     }
     
     .countdown-content {
         padding: 3rem 2rem;
+    }
+    
+    .hashtag {
+        font-size: 1.1rem;
+        letter-spacing: 1.5px;
+    }
+    
+    .rsvp-toast {
+        padding: 2.5rem 2rem;
+    }
+    
+    .quote-text {
+        font-size: 1.2rem;
     }
     
     .custom-nav .navbar-nav {
@@ -1469,6 +1592,19 @@ html {
     
     .custom-nav .navbar-nav .nav-link {
         margin: 0.5rem 0;
+    }
+    
+    /* Hide navigation bar on mobile by default - only show menu toggle */
+    .custom-nav .navbar-collapse:not(.show) {
+        display: none !important;
+    }
+    
+    .custom-nav .navbar-collapse.show {
+        display: block !important;
+    }
+    
+    .custom-nav .navbar-toggler {
+        display: block !important;
     }
 }
 
@@ -1512,6 +1648,10 @@ html {
         padding: 1.5rem;
     }
     
+    .timeline-item {
+        margin-bottom: 1.5rem;
+    }
+    
     .timeline-content {
         padding: 1.5rem;
     }
@@ -1523,6 +1663,36 @@ html {
     .social-link {
         width: 50px;
         height: 50px;
+    }
+    
+    .hashtag {
+        font-size: 1rem;
+        letter-spacing: 1px;
+    }
+    
+    .rsvp-toast {
+        padding: 2rem 1.5rem;
+    }
+    
+    .quote-text {
+        font-size: 1.1rem;
+    }
+    
+    .toast-message p {
+        font-size: 1rem;
+    }
+    
+    /* Hide navigation bar on small mobile by default - only show menu toggle */
+    .custom-nav .navbar-collapse:not(.show) {
+        display: none !important;
+    }
+    
+    .custom-nav .navbar-collapse.show {
+        display: block !important;
+    }
+    
+    .custom-nav .navbar-toggler {
+        display: block !important;
     }
     
     .countdown-numbers {
