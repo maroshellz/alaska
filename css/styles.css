@@ -1474,6 +1474,11 @@ html {
         margin: 0 0.5rem;
     }
     
+    .hero-names {
+        flex-wrap: wrap;
+        white-space: normal;
+    }
+    
     .ampersand {
         font-size: 4rem;
     }
@@ -1617,6 +1622,11 @@ html {
     .bride-name, .groom-name {
         font-size: 3.5rem;
         margin: 0 0.5rem;
+    }
+    
+    .hero-names {
+        flex-wrap: wrap;
+        white-space: normal;
     }
     
     .ampersand {
