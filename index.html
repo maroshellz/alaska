@@ -531,5 +531,191 @@
     
     <!-- Custom JavaScript -->
     <script src="js/scripts.js"></script>
+    
+    <!-- Anti-Inspection Protection -->
+    <script>
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+        document.addEventListener('keydown', function(e) {
+            // F12
+            if (e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+I (DevTools)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+J (Console)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+U (View Source)
+            if (e.ctrlKey && e.keyCode === 85) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+C (Element Inspector)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+S (Save Page)
+            if (e.ctrlKey && e.keyCode === 83) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Disable text selection
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable drag
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable copy
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable cut
+        document.addEventListener('cut', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable paste
+        document.addEventListener('paste', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Disable print
+        window.addEventListener('beforeprint', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Detect and block developer tools
+        let devtools = {
+            open: false,
+            orientation: null
+        };
+
+        const threshold = 160;
+
+        setInterval(function() {
+            if (window.outerHeight - window.innerHeight > threshold || 
+                window.outerWidth - window.innerWidth > threshold) {
+                if (!devtools.open) {
+                    devtools.open = true;
+                    // Redirect or show warning
+                    document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;color:#fff;font-family:Arial;"><h1>Access Denied</h1></div>';
+                    window.location.href = 'about:blank';
+                }
+            } else {
+                devtools.open = false;
+            }
+        }, 500);
+
+        // Block console access
+        (function() {
+            const noop = function() {};
+            const methods = ['log', 'debug', 'info', 'warn', 'error', 'assert', 'clear', 'count', 'dir', 'dirxml', 'group', 'groupCollapsed', 'groupEnd', 'profile', 'profileEnd', 'time', 'timeEnd', 'timeStamp', 'trace'];
+            methods.forEach(function(method) {
+                console[method] = noop;
+            });
+        })();
+
+        // Disable image right-click
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('img');
+            images.forEach(function(img) {
+                img.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    return false;
+                });
+            });
+        });
+
+        // Disable video controls right-click
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('video');
+            videos.forEach(function(video) {
+                video.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    return false;
+                });
+            });
+        });
+
+        // Block common inspection methods
+        Object.defineProperty(window, 'console', {
+            value: {},
+            writable: false,
+            configurable: false
+        });
+
+        // Disable alert, confirm, prompt
+        window.alert = function() {};
+        window.confirm = function() { return false; };
+        window.prompt = function() { return null; };
+
+        // Block common debugging functions
+        window.debugger = function() {};
+        window.eval = function() {};
+
+        // Disable source viewing
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode === 83 && e.ctrlKey && e.shiftKey) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Add CSS to disable text selection
+        const style = document.createElement('style');
+        style.textContent = `
+            * {
+                -webkit-user-select: none !important;
+                -moz-user-select: none !important;
+                -ms-user-select: none !important;
+                user-select: none !important;
+                -webkit-touch-callout: none !important;
+                -webkit-tap-highlight-color: transparent !important;
+            }
+            
+            input, textarea {
+                -webkit-user-select: text !important;
+                -moz-user-select: text !important;
+                -ms-user-select: text !important;
+                user-select: text !important;
+            }
+            
+            img {
+                -webkit-user-drag: none !important;
+                -khtml-user-drag: none !important;
+                -moz-user-drag: none !important;
+                -o-user-drag: none !important;
+                user-drag: none !important;
+                pointer-events: none !important;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
