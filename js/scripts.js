@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const rsvpForm = document.querySelector('.rsvp-form');
         
         if (rsvpForm) {
-            rsvpForm.addEventListener('submit', function(e) {
+            rsvpForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
                 // Get form data
@@ -130,9 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const name = formData.get('name');
                 const email = formData.get('email');
                 const attendance = formData.get('attendance');
-                const guests = formData.get('guests');
                 const phone = formData.get('phone');
-                const dietary = formData.get('dietary');
                 const message = formData.get('message');
                 
                 // Validate required fields
@@ -141,27 +139,103 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 
-                // Simulate form submission
+                // Show loading notification
                 showNotification('Sending RSVP...', 'info');
                 
-                setTimeout(() => {
-                    // Show success message
-                    const message = attendance === 'yes' 
-                        ? `Thank you ${name}! Your RSVP has been confirmed. We can't wait to celebrate with you!`
-                        : `Thank you ${name}! We've received your RSVP. We'll miss you but understand you can't make it.`;
+                try {
+                    // Check if Firebase is available
+                    if (!window.db || !window.addDoc || !window.collection || !window.serverTimestamp) {
+                        throw new Error('Firebase not initialized. Please check your configuration.');
+                    }
                     
-                    showNotification(message, 'success');
+                    // Prepare RSVP data
+                    const rsvpData = {
+                        name: name.trim(),
+                        email: email.trim(),
+                        attendance: attendance === '1', // Convert to boolean
+                        phone: phone ? phone.trim() : '',
+                        message: message ? message.trim() : '',
+                        submittedAt: window.serverTimestamp(),
+                        ipAddress: await getClientIP(), // Optional: get user's IP
+                        userAgent: navigator.userAgent
+                    };
+                    
+                    // Submit to Firestore
+                    const docRef = await window.addDoc(window.collection(window.db, 'rsvps'), rsvpData);
                     
                     // Reset form
                     this.reset();
                     
-                    // Log form data (in a real app, this would be sent to a server)
-                    console.log('RSVP Data:', {
-                        name, email, attendance, guests, phone, dietary, message
-                    });
-                }, 1500);
+                    // Show success modal
+                    showRSVPSuccessModal();
+                    
+                    // Log success
+                    console.log('RSVP submitted successfully with ID: ', docRef.id);
+                    
+                } catch (error) {
+                    console.error('Error submitting RSVP:', error);
+                    showNotification('Sorry, there was an error submitting your RSVP. Please try again or contact us directly.', 'error');
+                }
             });
         }
+    }
+    
+    // Helper function to get client IP (optional)
+    async function getClientIP() {
+        try {
+            const response = await fetch('https://api.ipify.org?format=json');
+            const data = await response.json();
+            return data.ip;
+        } catch (error) {
+            console.log('Could not get IP address:', error);
+            return 'unknown';
+        }
+    }
+    
+    // Function to show RSVP success modal
+    function showRSVPSuccessModal() {
+        const modal = new bootstrap.Modal(document.getElementById('rsvpSuccessModal'));
+        modal.show();
+        
+        // Add some celebration effects
+        setTimeout(() => {
+            createConfettiEffect();
+        }, 500);
+    }
+    
+    // Function to create confetti effect
+    function createConfettiEffect() {
+        const colors = ['#ffd700', '#3b82f6', '#8b5a3c', '#28a745'];
+        const confettiCount = 50;
+        
+        for (let i = 0; i < confettiCount; i++) {
+            setTimeout(() => {
+                createConfettiPiece(colors[Math.floor(Math.random() * colors.length)]);
+            }, i * 20);
+        }
+    }
+    
+    // Function to create individual confetti pieces
+    function createConfettiPiece(color) {
+        const confetti = document.createElement('div');
+        confetti.style.cssText = `
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: ${color};
+            top: -10px;
+            left: ${Math.random() * 100}vw;
+            z-index: 10000;
+            pointer-events: none;
+            border-radius: 50%;
+            animation: confettiFall 3s linear forwards;
+        `;
+        
+        document.body.appendChild(confetti);
+        
+        setTimeout(() => {
+            confetti.remove();
+        }, 3000);
     }
     
     // Navigation effects

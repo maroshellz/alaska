@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding RSVP Admin Panel</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/admin-styles.css">
+</head>
+<body>
+    <!-- Access Code Modal -->
+    <div class="modal fade" id="accessModal" tabindex="-1" aria-labelledby="accessModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content access-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="accessModalLabel">
+                        <i class="fas fa-lock"></i> Admin Access
+                    </h5>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="access-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Enter Access Code</h4>
+                    <p class="text-muted">Please enter the admin access code to continue</p>
+                    <div class="access-form">
+                        <input type="password" class="form-control" id="accessCode" placeholder="Enter access code" maxlength="20">
+                        <div class="invalid-feedback" id="accessError"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="index.html" class="btn btn-outline-secondary">
+                        <i class="fas fa-home"></i> Back to Website
+                    </a>
+                    <button type="button" class="btn btn-primary" id="submitAccess">
+                        <i class="fas fa-sign-in-alt"></i> Access Admin
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Admin Panel -->
+    <div id="adminPanel" class="d-none">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h1 class="admin-title">
+                            <i class="fas fa-heart"></i> Wedding RSVP Admin
+                        </h1>
+                        <p class="admin-subtitle">Rachael & Destiny - December 20, 2025</p>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <a href="index.html" class="btn btn-outline-light" target="_blank">
+                            <i class="fas fa-home"></i> Back to Website
+                        </a>
+                        <button class="btn btn-outline-light" id="refreshData">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                        <button class="btn btn-outline-light" id="downloadExcel">
+                            <i class="fas fa-file-excel"></i> Download Excel
+                        </button>
+                        <button class="btn btn-outline-light" id="logoutAdmin">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Counter -->
+        <section class="stats-section">
+            <div class="container-fluid">
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalRSVPs">0</h3>
+                                <p>Total RSVPs</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="stat-card attending">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="attendingCount">0</h3>
+                                <p>Attending</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="stat-card not-attending">
+                            <div class="stat-icon">
+                                <i class="fas fa-times-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="notAttendingCount">0</h3>
+                                <p>Not Attending</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="stat-card pending">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="pendingCount">0</h3>
+                                <p>Pending</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Table -->
+        <section class="table-section">
+            <div class="container-fluid">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3><i class="fas fa-list"></i> RSVP Management</h3>
+                        <div class="table-controls">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="searchInput" placeholder="Search RSVPs...">
+                            </div>
+                            <select id="statusFilter" class="form-select">
+                                <option value="">All Status</option>
+                                <option value="attending">Attending</option>
+                                <option value="not-attending">Not Attending</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Desktop Table -->
+                    <div class="table-responsive d-none d-lg-block">
+                        <table class="table table-hover" id="rsvpTable">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Attendance</th>
+                                    <th>Status</th>
+                                    <th>Submitted</th>
+                                    <th>Message</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rsvpTableBody">
+                                <!-- RSVP data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Mobile Cards -->
+                    <div class="mobile-cards-container d-lg-none" id="mobileCardsContainer">
+                        <!-- Mobile cards will be loaded here -->
+                    </div>
+                    
+                    <div class="table-footer">
+                        <div class="pagination-info">
+                            Showing <span id="showingCount">0</span> of <span id="totalCount">0</span> RSVPs
+                        </div>
+                        <nav>
+                            <ul class="pagination" id="pagination">
+                                <!-- Pagination will be generated here -->
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay d-none">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, getDocs, doc, updateDoc, query, orderBy, where } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB3sxpllYy66bRLhRiL40OhmDOrtxwOgv4",
+            authDomain: "alaska-b81ba.firebaseapp.com",
+            databaseURL: "https://alaska-b81ba-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "alaska-b81ba",
+            storageBucket: "alaska-b81ba.firebasestorage.app",
+            messagingSenderId: "533214076071",
+            appId: "1:533214076071:web:a8ac46fb56a105e74e4f82"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Make Firebase available globally
+        window.db = db;
+        window.getDocs = getDocs;
+        window.collection = collection;
+        window.doc = doc;
+        window.updateDoc = updateDoc;
+        window.query = query;
+        window.orderBy = orderBy;
+        window.where = where;
+    </script>
+    
+    <!-- Custom Admin JavaScript -->
+    <script src="js/admin-scripts.js"></script>
+</body>
+</html>

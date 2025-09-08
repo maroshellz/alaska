@@ -531,6 +531,45 @@ html {
     width: 100%;
 }
 
+/* Admin Link Styling */
+.admin-link {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(59, 130, 246, 0.1));
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 20px;
+    padding: 0.5rem 1rem !important;
+    margin: 0 0.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.admin-link:hover {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(59, 130, 246, 0.2));
+    border-color: rgba(255, 215, 0, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.admin-link:hover::before {
+    left: 100%;
+}
+
+.admin-link i {
+    margin-right: 0.5rem;
+    color: #ffd700;
+}
+
 .navbar-toggler {
     border: none;
     color: var(--primary-color);
@@ -1771,6 +1810,11 @@ html {
         margin: 0.5rem 0;
     }
     
+    .admin-link {
+        margin: 0.5rem 0 !important;
+        text-align: center;
+    }
+    
     /* Hide navigation bar on mobile by default - only show menu toggle */
     .custom-nav .navbar-collapse:not(.show) {
         display: none !important;
@@ -1942,6 +1986,301 @@ img {
 
 img[src=""] {
     opacity: 0;
+}
+
+/* RSVP Success Modal Styles */
+.rsvp-success-modal {
+    border: none;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.95));
+    backdrop-filter: blur(20px);
+}
+
+.rsvp-success-modal .modal-header {
+    background: linear-gradient(135deg, var(--navy-blue), var(--primary-color));
+    color: white;
+    border: none;
+    padding: 2rem 2rem 1rem 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.rsvp-success-modal .modal-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hearts-modal" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23hearts-modal)"/></svg>');
+    opacity: 0.3;
+}
+
+.rsvp-success-modal .success-icon {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 1rem;
+}
+
+.rsvp-success-modal .success-icon i {
+    font-size: 4rem;
+    color: #28a745;
+    background: white;
+    border-radius: 50%;
+    padding: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: successPulse 2s ease-in-out infinite;
+}
+
+@keyframes successPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 15px 35px rgba(40, 167, 69, 0.3);
+    }
+}
+
+.rsvp-success-modal .btn-close {
+    filter: invert(1);
+    position: relative;
+    z-index: 2;
+}
+
+.rsvp-success-modal .modal-body {
+    padding: 2rem;
+    position: relative;
+}
+
+.rsvp-success-modal .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    background: linear-gradient(135deg, var(--navy-blue), var(--primary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.rsvp-success-modal .success-message {
+    margin-bottom: 2rem;
+}
+
+.rsvp-success-modal .success-message .lead {
+    font-size: 1.3rem;
+    color: var(--navy-blue);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.rsvp-success-modal .success-message p {
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.rsvp-success-modal .email-notice {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 90, 60, 0.1));
+    border: 2px solid rgba(59, 130, 246, 0.2);
+    border-radius: 15px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.rsvp-success-modal .email-notice:hover {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 90, 60, 0.15));
+    border-color: rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+}
+
+.rsvp-success-modal .email-notice i {
+    color: var(--navy-blue);
+    font-size: 1.2rem;
+}
+
+.rsvp-success-modal .email-notice span {
+    color: var(--text-dark);
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.rsvp-success-modal .celebration-emoji {
+    font-size: 3rem;
+    margin: 1rem 0;
+    animation: celebrationBounce 1.5s ease-in-out infinite;
+}
+
+@keyframes celebrationBounce {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-10px) rotate(-5deg);
+    }
+    75% {
+        transform: translateY(-5px) rotate(5deg);
+    }
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.rsvp-success-modal .modal-footer {
+    background: linear-gradient(135deg, rgba(248, 249, 250, 0.8), rgba(255, 255, 255, 0.8));
+    border: none;
+    padding: 1.5rem 2rem;
+    justify-content: center;
+}
+
+.rsvp-success-modal .btn-primary {
+    background: linear-gradient(135deg, var(--navy-blue), var(--primary-color));
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 25px rgba(30, 58, 138, 0.3);
+}
+
+.rsvp-success-modal .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.rsvp-success-modal .btn-primary:hover {
+    background: linear-gradient(135deg, var(--navy-dark), var(--navy-light));
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(30, 58, 138, 0.4);
+}
+
+.rsvp-success-modal .btn-primary:hover::before {
+    left: 100%;
+}
+
+.rsvp-success-modal .btn-primary i {
+    margin-right: 0.5rem;
+}
+
+/* Mobile responsiveness for modal */
+@media (max-width: 768px) {
+    .rsvp-success-modal .modal-header {
+        padding: 1.5rem 1.5rem 1rem 1.5rem;
+    }
+    
+    .rsvp-success-modal .success-icon i {
+        font-size: 3rem;
+        padding: 0.75rem;
+    }
+    
+    .rsvp-success-modal .modal-body {
+        padding: 1.5rem;
+    }
+    
+    .rsvp-success-modal .modal-title {
+        font-size: 1.6rem;
+    }
+    
+    .rsvp-success-modal .success-message .lead {
+        font-size: 1.2rem;
+    }
+    
+    .rsvp-success-modal .success-message p {
+        font-size: 1rem;
+    }
+    
+    .rsvp-success-modal .email-notice {
+        padding: 0.75rem 1rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .rsvp-success-modal .celebration-emoji {
+        font-size: 2.5rem;
+    }
+    
+    .rsvp-success-modal .modal-footer {
+        padding: 1rem 1.5rem;
+    }
+    
+    .rsvp-success-modal .btn-primary {
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .rsvp-success-modal .modal-header {
+        padding: 1rem 1rem 0.5rem 1rem;
+    }
+    
+    .rsvp-success-modal .success-icon i {
+        font-size: 2.5rem;
+        padding: 0.5rem;
+    }
+    
+    .rsvp-success-modal .modal-body {
+        padding: 1rem;
+    }
+    
+    .rsvp-success-modal .modal-title {
+        font-size: 1.4rem;
+    }
+    
+    .rsvp-success-modal .success-message .lead {
+        font-size: 1.1rem;
+    }
+    
+    .rsvp-success-modal .success-message p {
+        font-size: 0.95rem;
+    }
+    
+    .rsvp-success-modal .email-notice {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .rsvp-success-modal .celebration-emoji {
+        font-size: 2rem;
+    }
+    
+    .rsvp-success-modal .modal-footer {
+        padding: 0.75rem 1rem;
+    }
+    
+    .rsvp-success-modal .btn-primary {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+    }
 }
 
 /* Custom scrollbar */
