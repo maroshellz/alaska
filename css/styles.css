@@ -1432,6 +1432,11 @@ html {
     animation: fadeInUp 0.6s forwards;
 }
 
+/* Extra padding for color palette Q&A item */
+.qa-item:has(.color-palette) {
+    padding-bottom: 3.5rem;
+}
+
 .qa-item:nth-child(1) { animation-delay: 0.1s; }
 .qa-item:nth-child(2) { animation-delay: 0.2s; }
 .qa-item:nth-child(3) { animation-delay: 0.3s; }
@@ -1467,6 +1472,68 @@ html {
     line-height: 1.7;
     margin: 0;
     font-weight: 400;
+}
+
+/* Color Palette Styles - Simple Bar Chart */
+.color-palette {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.color-swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+    height: 200px;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    background: var(--color);
+}
+
+.color-swatch:hover {
+    transform: scale(1.05);
+}
+
+.color-swatch.beige {
+    --color: #F5F5DC;
+    background: #F5F5DC;
+}
+
+.color-swatch.blush-pink {
+    --color: #FFB6C1;
+    background: #FFB6C1;
+}
+
+.color-swatch.dusty-rose {
+    --color: #BC8F8F;
+    background: #BC8F8F;
+}
+
+/* Color bar labels */
+.color-swatch::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    font-family: 'Poppins', sans-serif;
 }
 
 /* Footer */
@@ -1669,6 +1736,11 @@ html {
         margin-bottom: 1.2rem;
     }
     
+    /* Extra padding for color palette Q&A item on mobile */
+    .qa-item:has(.color-palette) {
+        padding-bottom: 3rem;
+    }
+    
     .qa-question {
         font-size: 1.25rem;
     }
@@ -1775,12 +1847,33 @@ html {
         margin-bottom: 1rem;
     }
     
+    /* Extra padding for color palette Q&A item on small mobile */
+    .qa-item:has(.color-palette) {
+        padding-bottom: 2.5rem;
+    }
+    
     .qa-question {
         font-size: 1.2rem;
     }
     
     .qa-answer {
         font-size: 1rem;
+    }
+    
+    .color-palette {
+        gap: 1.2rem;
+        margin-top: 1rem;
+        max-width: 480px;
+    }
+    
+    .color-swatch {
+        width: 100px;
+        height: 160px;
+    }
+    
+    .color-swatch::after {
+        font-size: 1rem;
+        bottom: -35px;
     }
     
     .social-link {
