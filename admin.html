@@ -247,39 +247,41 @@
             return false;
         });
 
-        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-        document.addEventListener('keydown', function(e) {
-            // F12
-            if (e.keyCode === 123) {
-                e.preventDefault();
-                return false;
-            }
-            // Ctrl+Shift+I (DevTools)
-            if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
-                e.preventDefault();
-                return false;
-            }
-            // Ctrl+Shift+J (Console)
-            if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
-                e.preventDefault();
-                return false;
-            }
-            // Ctrl+U (View Source)
-            if (e.ctrlKey && e.keyCode === 85) {
-                e.preventDefault();
-                return false;
-            }
-            // Ctrl+Shift+C (Element Inspector)
-            if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
-                e.preventDefault();
-                return false;
-            }
-            // Ctrl+S (Save Page)
-            if (e.ctrlKey && e.keyCode === 83) {
-                e.preventDefault();
-                return false;
-            }
-        });
+        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U (desktop only)
+        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            document.addEventListener('keydown', function(e) {
+                // F12
+                if (e.keyCode === 123) {
+                    e.preventDefault();
+                    return false;
+                }
+                // Ctrl+Shift+I (DevTools)
+                if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+                    e.preventDefault();
+                    return false;
+                }
+                // Ctrl+Shift+J (Console)
+                if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+                    e.preventDefault();
+                    return false;
+                }
+                // Ctrl+U (View Source)
+                if (e.ctrlKey && e.keyCode === 85) {
+                    e.preventDefault();
+                    return false;
+                }
+                // Ctrl+Shift+C (Element Inspector)
+                if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
+                    e.preventDefault();
+                    return false;
+                }
+                // Ctrl+S (Save Page)
+                if (e.ctrlKey && e.keyCode === 83) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
 
         // Disable text selection
         document.addEventListener('selectstart', function(e) {
@@ -317,27 +319,30 @@
             return false;
         });
 
-        // Detect and block developer tools
+        // Detect and block developer tools (mobile-friendly)
         let devtools = {
             open: false,
             orientation: null
         };
 
-        const threshold = 160;
+        // Only run devtools detection on desktop
+        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            const threshold = 160;
 
-        setInterval(function() {
-            if (window.outerHeight - window.innerHeight > threshold || 
-                window.outerWidth - window.innerWidth > threshold) {
-                if (!devtools.open) {
-                    devtools.open = true;
-                    // Redirect or show warning
-                    document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;color:#fff;font-family:Arial;"><h1>Access Denied</h1></div>';
-                    window.location.href = 'about:blank';
+            setInterval(function() {
+                if (window.outerHeight - window.innerHeight > threshold || 
+                    window.outerWidth - window.innerWidth > threshold) {
+                    if (!devtools.open) {
+                        devtools.open = true;
+                        // Redirect or show warning
+                        document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;color:#fff;font-family:Arial;"><h1>Access Denied</h1></div>';
+                        window.location.href = 'about:blank';
+                    }
+                } else {
+                    devtools.open = false;
                 }
-            } else {
-                devtools.open = false;
-            }
-        }, 500);
+            }, 500);
+        }
 
         // Block console access
         (function() {
@@ -386,13 +391,15 @@
         window.debugger = function() {};
         window.eval = function() {};
 
-        // Disable source viewing
-        document.addEventListener('keydown', function(e) {
-            if (e.keyCode === 83 && e.ctrlKey && e.shiftKey) {
-                e.preventDefault();
-                return false;
-            }
-        });
+        // Disable source viewing (desktop only)
+        if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            document.addEventListener('keydown', function(e) {
+                if (e.keyCode === 83 && e.ctrlKey && e.shiftKey) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
 
         // Add CSS to disable text selection
         const style = document.createElement('style');
